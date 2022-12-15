@@ -32,7 +32,7 @@
         default: 0
       - name: max_train_steps
         type: integer
-        default: 3
+        default: 10
     inputs:
       - name: training-set-images
         default: [

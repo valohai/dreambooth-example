@@ -1,6 +1,7 @@
 import argparse
 import hashlib
 import itertools
+import json
 import math
 import os
 import warnings
@@ -742,6 +743,9 @@ def main(args):
             logs = {"loss": loss.detach().item(), "lr": lr_scheduler.get_last_lr()[0]}
             progress_bar.set_postfix(**logs)
             accelerator.log(logs, step=global_step)
+
+            logs['step'] = global_step
+            print(json.dumps(logs))
 
             if global_step >= args.max_train_steps:
                 break
