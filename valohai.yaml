@@ -1,9 +1,45 @@
 - step:
     name: train
     image: diffusers/diffusers-pytorch-cuda
-    command: 
-    - python train.py
+    environment: azure-westeurope-nc6
+    command:
+    - pip install diffusers
+    - accelerate launch train_dreambooth.py {parameters} --instance_data_dir=/valohai/inputs/training-set-images --output_dir=/valohai/outputs
+    parameters:
+      - name: pretrained_model_name_or_path
+        type: string
+        default: "CompVis/stable-diffusion-v1-4"
+      - name: instance_prompt
+        type: string
+        default: "A photo of sks dog"
+      - name: lr_scheduler
+        type: string
+        default: "constant"      
+      - name: resolution
+        type: integer
+        default: 512
+      - name: train_batch_size
+        type: integer
+        default: 1
+      - name: gradient_accumulation_steps
+        type: integer
+        default: 1
+      - name: learning_rate
+        type: float
+        default: 0.000005
+      - name: lr_warmup_steps
+        type: integer
+        default: 0
+      - name: max_train_steps
+        type: integer
+        default: 3
     inputs:
       - name: training-set-images
-        default: https://dreambooth-example.s3.eu-west-1.amazonaws.com/dogs_dataset.zip
+        default: [
+          https://dreambooth-example.s3.eu-west-1.amazonaws.com/alvan-nee-9M0tSjb-cpA-unsplash.jpeg,
+          https://dreambooth-example.s3.eu-west-1.amazonaws.com/alvan-nee-bQaAJCbNq3g-unsplash.jpeg,
+          https://dreambooth-example.s3.eu-west-1.amazonaws.com/alvan-nee-brFsZ7qszSY-unsplash.jpeg,
+          https://dreambooth-example.s3.eu-west-1.amazonaws.com/alvan-nee-eoqnr8ikwFE-unsplash.jpeg,
+          https://dreambooth-example.s3.eu-west-1.amazonaws.com/alvan-nee-Id1DBHv4fbg-unsplash.jpeg,
+        ]
  
