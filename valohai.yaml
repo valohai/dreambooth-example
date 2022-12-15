@@ -1,0 +1,9 @@
+- step:
+    name: train
+    image: diffusers/diffusers-pytorch-cuda
+    command: 
+    - python train.py
+    inputs:
+      - name: training-set-images
+        default: https://dreambooth-example.s3.eu-west-1.amazonaws.com/dogs_dataset.zip
+ 
